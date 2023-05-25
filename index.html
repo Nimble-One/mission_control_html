@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html
+  data-bs-theme="dark"
+  lang="en">
+  <head>
+    <title>Mission Control UI</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1" />
+
+    <!-- 3RD PARTY -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="css/bootstrap.min.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="css/styles.css" />
+    <script src="js/bootstrap.bundle.min.js"></script>
+  </head>
+
+  <body>
+    <!-- HEADER -->
+    <header id="cnt-header">
+      <div id="cnt-header-logo">
+        <svg class="header-logo">
+          <use xlink:href="#logo" />
+        </svg>
+      </div>
+
+      <!-- HEADER INFOS -->
+      <div id="cnt-header-infos">
+        <div class="status-item">
+          <span class="status-title">Supervisor status</span>
+          <span class="status-info">WIGGLE TELEOP</span>
+        </div>
+
+        <div
+          id="cdt-header-info-substate"
+          class="status-item">
+          <span class="status-subtitle">CRABE</span>
+          <span class="status-subtitle">FRAME CONTROL</span>
+        </div>
+      </div>
+
+      <!-- HEADER NAV -->
+      <nav id="cnt-header-navbar">
+        <div class="nav-item">
+          <svg
+            class="info-fill"
+            width="50"
+            height="50">
+            <use xlink:href="#bot" />
+          </svg>
+        </div>
+        <div class="nav-item">
+          <svg
+            width="50"
+            height="50">
+            <use xlink:href="#cellularData" />
+          </svg>
+        </div>
+        <div class="nav-item">
+          <svg
+            class="warning-fill"
+            width="50"
+            height="50">
+            <use xlink:href="#paddle" />
+          </svg>
+        </div>
+        <div class="nav-item">
+          <svg
+            class="disabled-fill"
+            width="50"
+            height="50">
+            <use xlink:href="#meetNow" />
+          </svg>
+        </div>
+        <div class="battery-item">
+          <svg
+            class="danger-fill"
+            width="50"
+            height="50">
+            <use xlink:href="#batteryRobot" />
+          </svg>
+          <span>8%</span>
+        </div>
+        <div class="battery-item">
+          <svg
+            class="success-fill"
+            width="50"
+            height="50">
+            <use xlink:href="#batteryPad" />
+          </svg>
+          <span>100%</span>
+        </div>
+      </nav>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <div id="cnt-main">
+      <!-- LEFT BAR EMERGENCY -->
+      <aside
+        aria-label="emergency"
+        class="left-bar">
+        <div class="empty">></div>
+        <span class="title">Emergency</span>
+        <button class="btn btn-dark emergency-button">
+          <span>RUNNING</span>
+          <svg
+            style="left: -104px"
+            width="30"
+            height="30">
+            <use xlink:href="#warning" />
+          </svg>
+        </button>
+        <button class="btn btn-dark emergency-button">
+          <span>FROZEN</span>
+          <svg
+            style="left: -99px"
+            width="30"
+            height="30">
+            <use xlink:href="#weatherSnowflake" />
+          </svg>
+        </button>
+        <button class="btn btn-dark emergency-button">
+          <span style="left: 2px; top: 15px">DISENGAGING</span>
+          <svg
+            style="left: -64px; top: -56px"
+            width="30"
+            height="30">
+            <use xlink:href="#info" />
+          </svg>
+        </button>
+        <button class="btn btn-dark emergency-button">
+          <span style="left: 2px; top: 15px">UNPOWERED</span>
+          <svg
+            style="left: -64px; top: -56px"
+            width="30"
+            height="30">
+            <use xlink:href="#flash" />
+          </svg>
+        </button>
+      </aside>
+
+      <!-- MAIN VIEW -->
+      <div class="view section">
+        <div class="header-section">
+          <svg
+            viewBox="0 0 50 50"
+            width="25"
+            height="25">
+            <use xlink:href="#meetNow" />
+          </svg>
+          Vision RGB Camera
+        </div>
+
+        <!-- VIEW CAMERA -->
+        <div class="camera-view">
+          <img
+            alt=":("
+            src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg" />
+        </div>
+      </div>
+
+      <!-- RIGHT BAR ACTIONS/DATA -->
+      <aside
+        aria-label="actions"
+        class="right-bar">
+        <div class="section">
+          <div class="header-section">
+            <svg
+              width="25"
+              height="25">
+              <use xlink:href="#code" />
+            </svg>
+            Action
+          </div>
+
+          <!-- ACTIONS -->
+          <div class="content-section">
+            <button
+              type="button"
+              class="btn btn-lg btn-success">
+              Loop locked
+            </button>
+            <button
+              type="button"
+              class="btn btn-lg btn-outline-light">
+              Adjust_wheel
+            </button>
+            <button
+              type="button"
+              class="btn btn-lg btn-success">
+              AGA
+            </button>
+          </div>
+        </div>
+
+        <!-- BATTERY -->
+        <div class="section">
+          <div class="header-section">
+            <svg
+              viewBox="0 0 50 50"
+              width="25"
+              height="25">
+              <use xlink:href="#batteryRobot" />
+            </svg>
+            Battery state
+          </div>
+
+          <div class="content-section">
+            <div class="odd-line line-data">
+              <div class="line-label">Index :</div>
+              <div class="line-value">Texte</div>
+            </div>
+            <div class="even-line line-data">
+              <div class="line-label">Voltage :</div>
+              <div class="line-value">24V</div>
+            </div>
+            <div class="odd-line line-data">
+              <div class="line-label">Current :</div>
+              <div class="line-value">18V</div>
+            </div>
+            <div class="even-line line-data">
+              <div class="line-label">Capacity :</div>
+              <div class="line-value">15A</div>
+            </div>
+            <div class="odd-line line-data">
+              <div class="line-label">Capacity (est) :</div>
+              <div class="line-value">10A</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ENGINE -->
+        <div class="section">
+          <div class="header-section">
+            <svg
+              viewBox="0 0 30 30"
+              width="25"
+              height="25">
+              <use xlink:href="#gauge" />
+            </svg>
+            Motor status
+          </div>
+
+          <div class="content-section">
+            <div class="odd-line line-data">
+              <div class="line-label">Compas</div>
+              <div class="line-value">Soulder</div>
+            </div>
+            <div class="even-line line-data">
+              <div class="line-label">C1 :</div>
+              <div class="line-value success-value">-0.97</div>
+            </div>
+            <div class="odd-line line-data">
+              <div class="line-label">C2 :</div>
+              <div class="line-value danger-value">-9.34</div>
+            </div>
+            <div class="even-line line-data">
+              <div class="line-label">C3 :</div>
+              <div class="line-value danger-value">9.31</div>
+            </div>
+            <div class="odd-line line-data">
+              <div class="line-label">C4 :</div>
+              <div class="line-value danger-value">9.01</div>
+            </div>
+
+            <div class="even-line line-data">
+              <div class="line-label">Compas</div>
+              <div class="line-value">Soulder</div>
+            </div>
+            <div class="odd-line line-data">
+              <div class="line-label">C1 :</div>
+              <div class="line-value success-value">-0.97</div>
+            </div>
+            <div class="even-line line-data">
+              <div class="line-label">C2 :</div>
+              <div class="line-value danger-value">-9.34</div>
+            </div>
+            <div class="odd-line line-data">
+              <div class="line-label">C3 :</div>
+              <div class="line-value danger-value">9.31</div>
+            </div>
+            <div class="even-line line-data">
+              <div class="line-label">C4 :</div>
+              <div class="line-value danger-value">9.01</div>
+            </div>
+            <div class="odd-line line-data">
+              <div class="line-label">Compas</div>
+              <div class="line-value">Soulder</div>
+            </div>
+            <div class="even-line line-data">
+              <div class="line-label">C1 :</div>
+              <div class="line-value success-value">-0.97</div>
+            </div>
+            <div class="odd-line line-data">
+              <div class="line-label">C2 :</div>
+              <div class="line-value danger-value">-9.34</div>
+            </div>
+            <div class="even-line line-data">
+              <div class="line-label">C3 :</div>
+              <div class="line-value danger-value">9.31</div>
+            </div>
+            <div class="odd-line line-data">
+              <div class="line-label">C4 :</div>
+              <div class="line-value danger-value">9.01</div>
+            </div>
+
+            <div class="even-line line-data">
+              <div class="line-label">Compas</div>
+              <div class="line-value">Soulder</div>
+            </div>
+            <div class="odd-line line-data">
+              <div class="line-label">C1 :</div>
+              <div class="line-value success-value">-0.97</div>
+            </div>
+            <div class="even-line line-data">
+              <div class="line-label">C2 :</div>
+              <div class="line-value danger-value">-9.34</div>
+            </div>
+            <div class="odd-line line-data">
+              <div class="line-label">C3 :</div>
+              <div class="line-value danger-value">9.31</div>
+            </div>
+            <div class="even-line line-data">
+              <div class="line-label">C4 :</div>
+              <div class="line-value danger-value">9.01</div>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <footer id="cnt-footer">
+      <div class="command-input">
+        <div class="shape-button">
+          <div class="controls"></div>
+          <span class="button">A</span>
+        </div>
+        <div class="command-info">Jump</div>
+      </div>
+
+      <div class="command-input">
+        <div class="shape-button">
+          <div class="controls"></div>
+          <span class="button">B</span>
+        </div>
+        <div class="command-info">Grab</div>
+      </div>
+
+      <div class="command-input">
+        <div class="shape-button">
+          <div class="controls"></div>
+          <span class="button">X</span>
+        </div>
+        <div class="command-info">Push</div>
+      </div>
+
+      <div class="command-input">
+        <div class="shape-button">
+          <div class="controls"></div>
+          <span class="button">Y</span>
+        </div>
+        <div class="command-info">Pull</div>
+      </div>
+
+      <div class="command-input">
+        <div class="shape-button">
+          <div class="trigger"></div>
+          <span class="button">LT</span>
+        </div>
+        <div class="command-info">Aim</div>
+      </div>
+
+      <div class="command-input">
+        <div class="shape-button">
+          <div class="trigger"></div>
+          <span class="button">RT</span>
+        </div>
+        <div class="command-info">Shoot</div>
+      </div>
+
+      <div class="command-input">
+        <div class="shape-button">
+          <div class="subtrigger"></div>
+          <span class="button">LB</span>
+        </div>
+        <div class="command-info">Special 1</div>
+      </div>
+
+      <div class="command-input">
+        <div class="shape-button">
+          <div class="subtrigger"></div>
+          <span class="button">RB</span>
+        </div>
+        <div class="command-info">Special 2</div>
+      </div>
+
+      <div class="command-input">
+        <div class="shape-button">
+          <div class="start-select"></div>
+          <span class="button">Start</span>
+        </div>
+        <div class="command-info">Pause</div>
+      </div>
+
+      <div class="command-input">
+        <div class="shape-button">
+          <div class="start-select"></div>
+          <span class="button">Select</span>
+        </div>
+        <div class="command-info">Menu Action</div>
+      </div>
+
+      <div class="command-input">
+        <div class="shape-button">
+          <div class="dpad"></div>
+          <span class="button">DPad</span>
+        </div>
+        <div class="command-info">Move</div>
+      </div>
+
+      <div class="command-input">
+        <div class="shape-button">
+          <div class="stick"></div>
+          <span class="button">LStick</span>
+        </div>
+        <div class="command-info">Move</div>
+      </div>
+
+      <div class="command-input">
+        <div class="shape-button">
+          <div class="stick"></div>
+          <span class="button">RStick</span>
+        </div>
+        <div class="command-info">Camera</div>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<!----------------->
+<!----------------->
+<!-- SVG SYMBOLS -->
+<!----------------->
+<!----------------->
+<svg display="none">
+  <!-- LOGO -->
+  <symbol
+    xmlns="http://www.w3.org/2000/svg"
+    width="108.852"
+    height="44"
+    viewBox="0 0 108.852 44">
+    <g
+      id="logo"
+      transform="translate(-144.785 -134.991)">
+      <path
+        id="Tracé_59"
+        data-name="Tracé 59"
+        d="M226.44,198.746v8.106a5.991,5.991,0,0,0,5.991,5.993h0a5.993,5.993,0,0,0,5.993-5.993V181.08Z"
+        transform="translate(-60.46 -34.126)"
+        fill="#eee" />
+      <path
+        id="Tracé_60"
+        data-name="Tracé 60"
+        d="M327.213,178.517,317.09,162.7a12.323,12.323,0,0,0,3.481-2.855,13.806,13.806,0,0,0,2.6-4.849,18.431,18.431,0,0,0,.8-5.321,15.573,15.573,0,0,0-1.124-6.058,12.594,12.594,0,0,0-3.281-4.612,14.8,14.8,0,0,0-5.352-2.977,23.621,23.621,0,0,0-7.268-1.038H293.75v43.524h8.566V164.682h5.71l9.191,13.835Zm-24.89-35.236h6.149a7.075,7.075,0,0,1,3.577.779,5.3,5.3,0,0,1,1.98,1.892,7.2,7.2,0,0,1,.857,2.217,10.156,10.156,0,0,1,.208,1.8,7.148,7.148,0,0,1-.327,2.04,6.749,6.749,0,0,1-1.064,2.1,5.55,5.55,0,0,1-2.038,1.656,7.216,7.216,0,0,1-3.252.651h-6.089Z"
+        transform="translate(-110.299 0)"
+        fill="#eee" />
+      <path
+        id="Tracé_61"
+        data-name="Tracé 61"
+        d="M436.981,162.481a7.125,7.125,0,0,0,1.241,3.964,9.623,9.623,0,0,0,3.283,3.073,8.722,8.722,0,0,0,4.462,1.184,9.333,9.333,0,0,0,8.01-4.257,7.236,7.236,0,0,0,1.212-3.961V135.05h8.454v27.607a15.4,15.4,0,0,1-2.365,8.485,16.469,16.469,0,0,1-6.385,5.793,18.989,18.989,0,0,1-8.926,2.1,18.689,18.689,0,0,1-8.838-2.1,16.526,16.526,0,0,1-6.354-5.793,15.373,15.373,0,0,1-2.365-8.485V135.05h8.566Z"
+        transform="translate(-210.006 -0.044)"
+        fill="#eee" />
+      <path
+        id="Tracé_62"
+        data-name="Tracé 62"
+        d="M171.989,136.85h0a5.97,5.97,0,0,0-4.932,2.616l-21.248,31.316a5.97,5.97,0,0,0,4.932,9.313h0a5.97,5.97,0,0,0,4.932-2.616l21.245-31.316a5.97,5.97,0,0,0-4.929-9.313Zm-.018,9.879a3.893,3.893,0,1,1,3.893-3.893,3.893,3.893,0,0,1-3.893,3.893Z"
+        transform="translate(0 -1.377)"
+        fill="#3db6d6" />
+    </g>
+  </symbol>
+
+  <!-- BATTERY BOT -->
+  <symbol
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    width="40.8"
+    height="31.2">
+    <defs>
+      <clipPath id="clip-path">
+        <rect
+          id="Rectangle_2219"
+          data-name="Rectangle 2219"
+          width="40.8"
+          height="31.2" />
+      </clipPath>
+    </defs>
+    <g
+      id="batteryRobot"
+      data-name="battery robot"
+      transform="translate(0 12)">
+      <g
+        id="Groupe_3340"
+        data-name="Groupe 3340"
+        clip-path="url(#clip-path)">
+        <path
+          id="Tracé_90"
+          data-name="Tracé 90"
+          d="M7.788,18.945A1.455,1.455,0,0,0,6.333,20.4v.007a1.455,1.455,0,1,0,1.455-1.462" />
+        <path
+          id="Tracé_91"
+          data-name="Tracé 91"
+          d="M13.607,18.945A1.455,1.455,0,0,0,12.152,20.4v.007a1.455,1.455,0,1,0,1.455-1.462" />
+        <path
+          id="Tracé_92"
+          data-name="Tracé 92"
+          d="M39.8,8.27a1.993,1.993,0,0,0-1-.26L36,8V6a6,6,0,0,0-6-6H8.4a6,6,0,0,0-6,6v4.22A13.2,13.2,0,0,1,24,20.4a12.925,12.925,0,0,1-.5,3.6H30a6,6,0,0,0,6-6V16l2.8.01a2,2,0,0,0,2-2v-4a2.014,2.014,0,0,0-1-1.74" />
+        <path
+          id="Tracé_93"
+          data-name="Tracé 93"
+          d="M10.8,9.6A10.8,10.8,0,1,0,21.6,20.4,10.8,10.8,0,0,0,10.8,9.6m7.172,13.71a2.182,2.182,0,0,1-2.182,2.182H5.606A2.182,2.182,0,0,1,3.423,23.31V17.491a2.183,2.183,0,0,1,2.183-2.183H9.97v-.727a.735.735,0,0,1,.728-.728h.055a.7.7,0,0,1,.672.728v.727H15.79a2.182,2.182,0,0,1,2.182,2.183Z" />
+      </g>
+    </g>
+  </symbol>
+
+  <!-- BATTERY PAD -->
+  <symbol
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    width="40.8"
+    height="31.2"
+    viewBox="0 0 40.8 31.2">
+    <defs>
+      <clipPath id="clip-path">
+        <rect
+          id="Rectangle_2220"
+          data-name="Rectangle 2220"
+          width="40.8"
+          height="31.2"
+          transform="translate(0 0)"
+          fill="#eee" />
+      </clipPath>
+    </defs>
+    <g
+      id="batteryPad"
+      data-name="battery pad"
+      transform="translate(0 12)">
+      <g
+        id="Groupe_3342"
+        data-name="Groupe 3342"
+        clip-path="url(#clip-path)">
+        <path
+          id="Tracé_94"
+          data-name="Tracé 94"
+          d="M39.8,8.27a1.993,1.993,0,0,0-1-.26L36,8V6a6,6,0,0,0-6-6H8.4a6,6,0,0,0-6,6v4.22A13.2,13.2,0,0,1,24,20.4a12.925,12.925,0,0,1-.5,3.6H30a6,6,0,0,0,6-6V16l2.8.01a2,2,0,0,0,2-2v-4a2.014,2.014,0,0,0-1-1.74" />
+        <path
+          id="Tracé_95"
+          data-name="Tracé 95"
+          d="M10.8,9.6A10.8,10.8,0,1,0,21.6,20.4,10.8,10.8,0,0,0,10.8,9.6m7.825,15.988a1.468,1.468,0,0,1-1.186.508,1.822,1.822,0,0,1-.777-.149,1.886,1.886,0,0,1-.537-.368l-2.072-2.071h-6.5L5.487,25.579a1.905,1.905,0,0,1-.538.368,1.825,1.825,0,0,1-.778.151,1.466,1.466,0,0,1-1.185-.508,1.738,1.738,0,0,1-.309-1.4l.956-6.675A3.01,3.01,0,0,1,4.619,15.7,2.716,2.716,0,0,1,6.5,14.94h8.627a2.714,2.714,0,0,1,1.883.757A3.013,3.013,0,0,1,18,17.51l.936,6.675a1.741,1.741,0,0,1-.309,1.4" />
+      </g>
+    </g>
+  </symbol>
+
+  <!-- BOT -->
+  <symbol
+    id="bot"
+    xmlns="http://www.w3.org/2000/svg"
+    width="48"
+    height="48"
+    viewBox="0 0 48 48">
+    <path
+      id="Tracé_53"
+      data-name="Tracé 53"
+      d="M35.26,27.61a4.336,4.336,0,0,1,4.34,4.34V33.6h-.01a8.457,8.457,0,0,1-2.7,6.14C34.6,41.83,30.64,43.2,24,43.2s-10.6-1.37-12.89-3.46a8.457,8.457,0,0,1-2.7-6.14H8.4V31.95a4.336,4.336,0,0,1,4.34-4.34ZM15.6,7.2A3.6,3.6,0,0,0,12,10.8v9.6A3.6,3.6,0,0,0,15.6,24H32.4A3.6,3.6,0,0,0,36,20.4V10.8a3.6,3.6,0,0,0-3.6-3.6H25.2V6A1.155,1.155,0,0,0,24,4.8,1.21,1.21,0,0,0,22.8,6V7.2Zm1.2,8.4A2.4,2.4,0,1,1,19.2,18,2.394,2.394,0,0,1,16.8,15.6Zm9.6,0A2.4,2.4,0,1,1,28.8,18,2.394,2.394,0,0,1,26.4,15.6Z" />
+  </symbol>
+
+  <!-- CELLULAR DATA -->
+  <symbol
+    id="cellularData"
+    data-name="Cellular Data 1"
+    xmlns="http://www.w3.org/2000/svg"
+    width="48"
+    height="48"
+    viewBox="0 0 48 48">
+    <path
+      id="Tracé_11"
+      data-name="Tracé 11"
+      d="M11.4,28.8a1.808,1.808,0,0,1,1.78,1.53l.02.27v6a1.8,1.8,0,0,1-3.58.27L9.6,36.6v-6A1.805,1.805,0,0,1,11.4,28.8ZM18.6,24a1.808,1.808,0,0,1,1.78,1.53l.02.27V36.6a1.8,1.8,0,0,1-3.58.27l-.02-.27V25.8A1.805,1.805,0,0,1,18.6,24Zm7.2-4.8a1.808,1.808,0,0,1,1.78,1.53l.02.27V36.6a1.8,1.8,0,0,1-3.58.27L24,36.6V21A1.805,1.805,0,0,1,25.8,19.2ZM33,14.4a1.808,1.808,0,0,1,1.78,1.53l.02.27V36.6a1.8,1.8,0,0,1-3.58.26l-.02-.26V16.2A1.805,1.805,0,0,1,33,14.4Zm7.2-4.8a1.788,1.788,0,0,1,1.78,1.5l.02.26L41.97,36.6a1.787,1.787,0,0,1-3.55.3l-.02-.26.03-25.24A1.793,1.793,0,0,1,40.2,9.6Z" />
+    <path
+      id="Tracé_12"
+      data-name="Tracé 12"
+      d="M0,0H48V48H0Z"
+      fill="none" />
+  </symbol>
+
+  <!-- LIGHTNING ICON -->
+  <symbol
+    id="flash"
+    xmlns="http://www.w3.org/2000/svg"
+    width="20.964"
+    height="20.964"
+    viewBox="0 0 20.964 20.964">
+    <path
+      id="Tracé_23"
+      data-name="Tracé 23"
+      d="M12.762,3a1.312,1.312,0,0,0-1.258.935L9.036,12.22a.982.982,0,0,0,.943,1.262h2.075l-1.677,5.752a1.636,1.636,0,0,0,2.852,1.476L21.885,9.835a.981.981,0,0,0-.769-1.594h-2.66l1.3-3.472A1.307,1.307,0,0,0,18.535,3Z"
+      transform="translate(-5.066 -1.69)" />
+    <path
+      id="Tracé_24"
+      data-name="Tracé 24"
+      d="M0,0H20.964V20.964H0Z"
+      fill="none" />
+  </symbol>
+
+  <!-- GAUGE -->
+  <symbol
+    id="gauge"
+    xmlns="http://www.w3.org/2000/svg"
+    width="27.974"
+    height="27.974"
+    viewBox="0 0 27.974 27.974">
+    <path
+      id="Tracé_25"
+      data-name="Tracé 25"
+      d="M15.99,27.179A11.19,11.19,0,1,0,4.8,15.99,11.193,11.193,0,0,0,15.99,27.179ZM18.531,9.474a6.995,6.995,0,0,0-7.489,11.464.7.7,0,1,1-.985.985A8.394,8.394,0,0,1,19.043,8.169a.7.7,0,0,1-.513,1.305Zm5.28,3.462a8.4,8.4,0,0,1-1.888,8.987.7.7,0,0,1-.985-.985,7,7,0,0,0,1.568-7.489.7.7,0,1,1,1.305-.513ZM21.7,10.144a.7.7,0,0,1,.157.874l-.157.274c-.093.175-.239.425-.408.728-.163.28-.35.606-.548.956l-.321.565-.42.723c-.192.338-.4.682-.589,1.02-.28.478-.554.938-.793,1.346-.2.338-.39.641-.542.874-.047.082-.1.157-.146.233-.035.052-.07.1-.1.152-.047.064-.087.122-.122.163a2.1,2.1,0,0,1-3.194-2.727,5.449,5.449,0,0,1,.478-.455c.216-.186.484-.414.787-.67.606-.513,1.37-1.136,2.116-1.737s1.474-1.189,2.016-1.62l.385-.309.519-.408A.687.687,0,0,1,21.7,10.144Z"
+      transform="translate(-2.003 -2.003)" />
+    <path
+      id="Tracé_26"
+      data-name="Tracé 26"
+      d="M0,0H27.974V27.974H0Z"
+      fill="none" />
+  </symbol>
+
+  <!-- INFO TOOLTIP -->
+  <symbol
+    id="info"
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24">
+    <path
+      id="Tracé_47"
+      data-name="Tracé 47"
+      d="M20,12a8,8,0,1,1-8-8A8,8,0,0,1,20,12Zm-8.8.8v2.4a.8.8,0,0,0,1.6,0V12.8a.8.8,0,1,0-1.6,0ZM12,8.4a1.2,1.2,0,1,0,1.2,1.2A1.2,1.2,0,0,0,12,8.4Z" />
+    <path
+      id="Tracé_48"
+      data-name="Tracé 48"
+      d="M0,0H24V24H0Z"
+      fill="none" />
+  </symbol>
+
+  <!-- CAMERA ICON -->
+  <symbol
+    id="meetNow"
+    data-name="Meet Now"
+    xmlns="http://www.w3.org/2000/svg"
+    width="48"
+    height="48"
+    viewBox="0 0 48 48">
+    <path
+      id="Tracé_33"
+      data-name="Tracé 33"
+      d="M14.3,8.77l.01-.01.03-.01a.6.6,0,0,1,.13-.08c.12-.08.31-.18.56-.31a20.7,20.7,0,0,1,2.1-.96A19.04,19.04,0,0,1,24,6a19.04,19.04,0,0,1,6.87,1.4,20.7,20.7,0,0,1,2.1.96c.25.13.44.23.56.31a.6.6,0,0,1,.13.08l.03.01.01.01a1.5,1.5,0,1,0,1.6-2.54h0l-.02-.01-.05-.03c-.05-.03-.11-.07-.19-.11-.16-.1-.38-.22-.67-.38a24.761,24.761,0,0,0-2.4-1.1A22.16,22.16,0,0,0,24,3a22.16,22.16,0,0,0-7.97,1.6,24.761,24.761,0,0,0-2.4,1.1c-.29.16-.51.28-.67.38-.08.04-.14.08-.19.11l-.05.03-.02.01h0a1.5,1.5,0,1,0,1.6,2.54ZM12,12a6,6,0,0,0-6,6V30a6,6,0,0,0,6,6H24a6,6,0,0,0,6-6V18a6,6,0,0,0-6-6Zm30,4.5a1.5,1.5,0,0,0-2.4-1.2l-6,4.5A1.492,1.492,0,0,0,33,21v6a1.492,1.492,0,0,0,.6,1.2l6,4.5A1.5,1.5,0,0,0,42,31.5ZM14.31,39.24l-.01-.01a1.5,1.5,0,0,0-1.6,2.54h0l.02.01.05.03c.05.03.11.07.19.11.16.1.38.22.67.38a24.761,24.761,0,0,0,2.4,1.1A22.16,22.16,0,0,0,24,45a22.16,22.16,0,0,0,7.97-1.6,24.761,24.761,0,0,0,2.4-1.1c.29-.16.51-.28.67-.38.08-.04.14-.08.19-.11l.05-.03.02-.01h0a1.5,1.5,0,1,0-1.6-2.54l-.01.01-.03.01a.6.6,0,0,1-.13.08c-.12.08-.31.18-.56.31a20.7,20.7,0,0,1-2.1.96A19.04,19.04,0,0,1,24,42a19.04,19.04,0,0,1-6.87-1.4,20.7,20.7,0,0,1-2.1-.96c-.25-.13-.44-.23-.56-.31a.6.6,0,0,1-.13-.08Z" />
+    <path
+      id="Tracé_34"
+      data-name="Tracé 34"
+      d="M0,0H48V48H0Z"
+      fill="none" />
+  </symbol>
+
+  <!-- PAD -->
+  <symbol
+    xmlns="http://www.w3.org/2000/svg"
+    width="48.825"
+    height="33.4"
+    viewBox="0 0 48.825 33.4">
+    <g id="paddle">
+      <path
+        id="sports_esports_FILL0_wght400_GRAD0_opsz48"
+        d="M75.242-726.6a4.391,4.391,0,0,1-3.549-1.521,5.2,5.2,0,0,1-.924-4.2l2.863-19.98a9.016,9.016,0,0,1,2.952-5.428A8.116,8.116,0,0,1,82.22-760h25.825a8.116,8.116,0,0,1,5.636,2.266,9.016,9.016,0,0,1,2.952,5.428l2.8,19.98a5.2,5.2,0,0,1-.924,4.2,4.391,4.391,0,0,1-3.549,1.521,5.454,5.454,0,0,1-2.326-.447,5.628,5.628,0,0,1-1.61-1.1l-6.2-6.2H85.381l-6.2,6.2a5.628,5.628,0,0,1-1.61,1.1A5.454,5.454,0,0,1,75.242-726.6Zm1.074-3.817,7.515-7.515h22.545l7.515,7.515a2.662,2.662,0,0,0,1.074.537.86.86,0,0,0,.805-.537,1.577,1.577,0,0,0,.149-1.074l-2.863-20.219a5.445,5.445,0,0,0-1.759-3.4,4.751,4.751,0,0,0-3.251-1.312H82.161a4.751,4.751,0,0,0-3.251,1.312,5.445,5.445,0,0,0-1.759,3.4l-2.863,20.219a1.577,1.577,0,0,0,.149,1.074.86.86,0,0,0,.805.537A1.911,1.911,0,0,0,76.316-730.417Zm31.909-10.5a2.289,2.289,0,0,0,1.67-.716,2.289,2.289,0,0,0,.716-1.67,2.289,2.289,0,0,0-.716-1.67,2.289,2.289,0,0,0-1.67-.716,2.289,2.289,0,0,0-1.67.716,2.289,2.289,0,0,0-.716,1.67,2.289,2.289,0,0,0,.716,1.67A2.289,2.289,0,0,0,108.225-740.914Zm-5.07-7.754a2.289,2.289,0,0,0,1.67-.716,2.289,2.289,0,0,0,.716-1.67,2.289,2.289,0,0,0-.716-1.67,2.289,2.289,0,0,0-1.67-.716,2.289,2.289,0,0,0-1.67.716,2.289,2.289,0,0,0-.716,1.67,2.289,2.289,0,0,0,.716,1.67A2.289,2.289,0,0,0,103.155-748.668Zm-18.788,7.455H87.35v-4.473h4.473v-2.982H87.35v-4.473H84.368v4.473H79.894v2.982h4.473ZM95.1-743.181Z"
+        transform="translate(-71.103 769.8)" />
+    </g>
+  </symbol>
+
+  <!-- WARNING -->
+  <symbol
+    id="warning"
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24">
+    <path
+      id="Tracé_39"
+      data-name="Tracé 39"
+      d="M12.426,4.915a1.813,1.813,0,0,1,3.15,0l8.18,14.34A1.831,1.831,0,0,1,22.186,22H5.816a1.831,1.831,0,0,1-1.57-2.745ZM13,11v2a1,1,0,0,0,2,0V11a1,1,0,0,0-2,0Zm1,4.5A1.5,1.5,0,1,0,15.5,17,1.5,1.5,0,0,0,14,15.5Z"
+      transform="translate(-2.001 -2)" />
+    <path
+      id="Tracé_40"
+      data-name="Tracé 40"
+      d="M0,0H24V24H0Z"
+      fill="none" />
+  </symbol>
+
+  <!-- SNOW FLAKE -->
+  <symbol
+    id="weatherSnowflake"
+    data-name="Weather Snowflake"
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24">
+    <path
+      id="Tracé_41"
+      data-name="Tracé 41"
+      d="M12,4.8a.675.675,0,0,1,.667.585l.008.09V7.612L14.032,6.42a.674.674,0,1,1,.889,1.013L12.675,9.409v1.916h1.916l1.976-2.246a.675.675,0,0,1,.874-.124l.079.06a.674.674,0,0,1,.12.874l-.06.079-1.189,1.358h2.134a.672.672,0,0,1,.667.581L19.2,12a.675.675,0,0,1-.585.667l-.09.008H16.388l1.192,1.357a.672.672,0,0,1,.008.881l-.068.071a.677.677,0,0,1-.881.007l-.071-.071-1.976-2.246H12.675v1.916l2.246,1.976a.678.678,0,0,1,.124.874l-.06.079a.674.674,0,0,1-.874.12l-.079-.06-1.357-1.192,0,2.137a.672.672,0,0,1-.581.667L12,19.2a.675.675,0,0,1-.667-.585l-.007-.09V16.388L9.967,17.58a.674.674,0,1,1-.889-1.012l2.246-1.976V12.675H9.566L7.432,15.1a.674.674,0,1,1-1.013-.889l1.35-1.537h-2.3a.675.675,0,0,1-.668-.585L4.8,12a.672.672,0,0,1,.585-.667l.09-.007H7.451L6.42,10.148a.674.674,0,1,1,1.013-.889l1.815,2.066h2.077V9.4L9.079,7.432a.679.679,0,0,1-.124-.874l.06-.079a.679.679,0,0,1,.874-.124l.079.06,1.358,1.192V5.475a.677.677,0,0,1,.495-.653l.09-.015Z"
+      transform="translate(0 0)" />
+    <path
+      id="Tracé_42"
+      data-name="Tracé 42"
+      d="M0,0H24V24H0Z"
+      fill="none" />
+  </symbol>
+
+  <!-- CODE TAG -->
+  <symbol
+    id="code"
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24">
+    <path
+      id="Tracé_57"
+      data-name="Tracé 57"
+      d="M16.73,8.344a1.129,1.129,0,0,1,.575,1.485l-6,13.5a1.126,1.126,0,1,1-2.06-.91l6-13.5A1.129,1.129,0,0,1,16.73,8.344ZM8.62,11.909a1.124,1.124,0,0,1,.1,1.59L6.38,16.124l2.335,2.63a1.124,1.124,0,0,1-1.68,1.5l-3-3.375a1.123,1.123,0,0,1,0-1.495l3-3.375A1.119,1.119,0,0,1,8.62,11.909Zm10.51,0a1.119,1.119,0,0,1,1.585.1l3,3.375a1.123,1.123,0,0,1,0,1.495l-3,3.375a1.124,1.124,0,0,1-1.68-1.5l2.335-2.63L19.035,13.5A1.124,1.124,0,0,1,19.13,11.909Z"
+      transform="translate(-1.875 -4.124)"
+      fill="#eee" />
+    <path
+      id="Tracé_58"
+      data-name="Tracé 58"
+      d="M0,0H24V24H0Z"
+      fill="none" />
+  </symbol>
+</svg>
