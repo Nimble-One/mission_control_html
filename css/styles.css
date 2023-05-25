@@ -120,6 +120,7 @@ body {
   transform: rotate(-180deg);
   color: var(--bs-danger);
   width: 100%;
+  font-size: 104px;
   height: calc(100% - 25px);
 }
 
