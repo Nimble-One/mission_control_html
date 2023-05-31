@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Mission Control</title>
+    <meta charset="utf-8">
+    <link rel="icon"
+        href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2016%2016'%3E%3Ctext%20x='0'%20y='14'%3E🚀%3C/text%3E%3C/svg%3E"
+        type="image/svg+xml" />
+
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <script src="../../os/web/utils/index.js"></script>
+    <script src="js/gamepad.js"></script>
+    <script src="js/streaming.js"></script>
+    <script src="js/battery.js"></script>
+    <!-- <script src="js/joystick.js"></script> -->
+</head>
+
+<body>
+    <div class="grid-container">
+        <div class="header">
+            <div class="header-left">
+                <span style="font-weight: bold;">Nimble One Mission Control</span>
+                <span id="connected-status" class="connected-status-disconnected" title=""></span>
+                <span id="joystick-status" class="joystick-status-disconnected" title=""></span>
+                <span id="streaming-status" class="streaming-status-off" title=""></span>
+                <span id="host-battery-status" class="battery-status-unknown"></span>
+            </div>
+            <div class="header-right">
+                <div id="header-info"></div>
+            </div>
+        </div>
+        <div class="left">
+            <div class="content-box">
+                <div class="content-box-header">Operating State (Success: <span
+                        id="operating-state-success">None</span>)
+                </div>
+                <div id="operating-states">
+                    <ul class="align-vertical">
+                        <li>
+                            <a class="operating-state bg-danger" data-id="0">⚠ Running</a>
+                        </li>
+                        <li>
+                            <a class="operating-state" data-id="1">Frozen</a>
+                        </li>
+                        <li>
+                            <a class="operating-state" data-id="2">Disengaging</a>
+                        </li>
+                        <li style="margin-top: 10px">
+                            <a class="operating-state bg-danger" data-id="3">⚠ Unpowered</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+            <div class="content-box">
+                <div class="content-box-header">Battery State</div>
+                <div id="battery-states">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="min-width: 80px">Index</th>
+                                <th style="min-width: 120px">Voltage</th>
+                                <th style="min-width: 120px">Current</th>
+                                <th style="min-width: 120px">Capacity</th>
+                                <th style="min-width: 120px">Capacity (est.)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="battery-states-data"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="content-box middle-left">
+            <div id="rs_rgb_camera">
+                <div class="content-box-header">Vision RGB Camera<span id="rs_rgb_camera-mode"></span>
+                </div>
+                <div id="rs_rgb_camera-div" width="320" height="240">
+                    <img id="rs_rgb_camera-img"></img>
+                </div>
+
+            </div>
+        </div>
+        <div class="content-box middle-left">
+            <div id="rs_depth_camera">
+                <div class="content-box-header">Vision Depth Camera<span id="rs_depth_camera-mode"></span>
+                </div>
+                <div id="rs_depth_camera-div" width="320" height="240">
+                    <img id="rs_depth_camera-img"></img>
+                </div>
+            </div>
+        </div>
+        <div class="content-box middle-left">
+            <div class="content-box-header">Control Stack</div>
+            <div id="control-stack"></div>
+        </div>
+        <div class="content-box middle-right">
+            <div id="command">
+                <div class="content-box-header">Velocity Command <span id="command-mode"></span></div>
+                <div>
+                    <canvas id="command-display" width="300" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="content-box right">
+            <div class="content-box-header">Top View</div>
+            <div>
+                <canvas id="top-view" width="300" height="300"></canvas>
+            </div>
+        </div>
+        <div class="footer">
+            <div id="tab-box" class="content-box">
+                <div class="tab content-box-header">
+                    <button class="tablinks active" data-tab="motor-status">Motor Status</button>
+                    <button class="tablinks" data-tab="q-control">Q Control</button>
+                    <button class="tablinks" data-tab="ee-control">EE Control</button>
+                    <button class="tablinks" data-tab="navigation">Navigation Command</button>
+                    <span id="tab-status"></span>
+                </div>
+
+                <div id="motor-status" class="tabcontent">
+                    <div id="motor-torque">
+                        Torques in Nm
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th style="min-width: 80px">Compass</th>
+                                    <th style="min-width: 200px">Shoulder</th>
+                                    <th style="min-width: 200px">Arm</th>
+                                    <th style="min-width: 200px">Forearm</th>
+                                    <th style="min-width: 200px">Wheel Orientation</th>
+                                    <th style="min-width: 200px">Wheel Rotation</th>
+                                </tr>
+                            </thead>
+                            <tbody id="motor-torque-data"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="q-control" class="tabcontent">
+                    <table style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th><a id="q-control-reload" href="#">Reload</a></th>
+                                <th>Shoulder</th>
+                                <th>Arm</th>
+                                <th></th>
+                                <th>Forearm</th>
+                                <th>Wheel</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="q-control-data">
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="ee-control" class="tabcontent">
+                    <table style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th><a id="ee-control-reload" href="#">Reload</a></th>
+                                <th>X</th>
+                                <th>Y</th>
+                                <th>Z</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="ee-control-data">
+                        </tbody>
+                    </table>
+                </div>
+                <div id="navigation" class="tabcontent">
+                    <div id="nav_command">
+                        <div style="font-size: medium">
+                            <input type="number" id="goal_x" name="goal_x" placeholder="x" size="5" />
+                            <input type="number" id="goal_y" name="goal_y" placeholder="y" size="5" />
+                            <input type="number" id="goal_theta" name="goal_theta" placeholder="theta" size="5" />
+                            <label for="goal_type">Relative</label>
+                            <input type="checkbox" id="goal_type" name="goal_type" />
+                            <input type="submit" id="submit_goal" value="Send goal" />
+                            <div><b>MOVE BASE STATUS : </b><a id="move-base-status">NONE</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="log-menu"><a id="log-clear">clear</a></div>
+                <div id="log"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+
+        const rad_to_deg = (rad) => rad * 180.0 / Math.PI;
+        const deg_to_rad = (deg) => deg * Math.PI / 180.0;
+        const round = (value, digits) => Math.round(value * 10 ** digits) / 10 ** digits;
+        const round_deg = (deg) => round(deg, 2);
+
+        // ---------------------------------------------------------------------
+        const REQUESTS_PER_SECOND = 30.0; // also defines the streaming frame rate
+
+        // ---------------------------------------------------------------------
+        // GAMEPAD
+        // ---------------------------------------------------------------------
+        const updateGamepadUI = (status) => {
+            const joystick_status = document.getElementById("joystick-status");
+            switch (status) {
+                case GamepadStatus.CONFLICT:
+                    joystick_status.className = "joystick-status-too-many";
+                    break;
+                case GamepadStatus.CONNECTED:
+                    joystick_status.className = "joystick-status-connected";
+                    break;
+                case GamepadStatus.DISCONNECTED:
+                    joystick_status.className = "joystick-status-disconnected";
+                    break;
+                case GamepadStatus.IDLE:
+                    joystick_status.className = "joystick-status-idle";
+                    break;
+                case GamepadStatus.UNSUPPORTED:
+                    joystick_status.className = "joystick-status-unsupported";
+                    break;
+            }
+        }
+
+        _gamepad_json = {};
+        const updateGamepadData = (gamepad_json) => {
+            _gamepad_json = gamepad_json;
+        }
+
+        const _gamepad = new Gamepad(updateGamepadData, updateGamepadUI, window);
+        _gamepad.start();
+
+
+        // ---------------------------------------------------------------------
+        // CAMERA
+        // ---------------------------------------------------------------------
+        const _camera_json = {"sensors": [
+                                "camera.color",
+                                "camera.depth"
+                              ],
+                              "ar": true, // auto-rotate TODO: retrieve from UI
+                              "q": 50}; // quality
+        const updateStreamingUI = (status) => {
+            const streaming_status = document.getElementById("streaming-status");
+            switch (status) {
+                case StreamingStatus.ON:
+                    streaming_status.className = "streaming-status-on";
+                    break;
+                case StreamingStatus.OFF:
+                    streaming_status.className = "streaming-status-off";
+                    break;
+                case StreamingStatus.UNSUPPORTED:
+                    streaming_status.className = "streaming-status-unsupported";
+                    break;
+            }
+        }
+
+        const _stream_handler = new StreamingHandler(updateStreamingUI,
+                                                     document.getElementById("rs_rgb_camera-img"),
+                                                     document.getElementById("rs_depth_camera-img"));
+
+
+        // ---------------------------------------------------------------------
+        // BATTERY
+        // ---------------------------------------------------------------------
+        const updateBatteryUI = (level, status) => {
+            const battery_status = document.getElementById("host-battery-status");
+            console.log(`> battery ${level}%`)
+            switch (status) {
+                case BatteryStatus.UNSUPPORTED:
+                case BatteryStatus.UNKNOWN:
+                    battery_status.className = "battery-status-unknown";
+                    battery_status.textContent = ""
+                    break;
+                case BatteryStatus.CHARGING:
+                    battery_status.className = "battery-status-charging";
+                    battery_status.textContent = ` (${level}%)`
+                    break;
+                case BatteryStatus.OK:
+                    battery_status.className = "battery-status-ok";
+                    battery_status.textContent = ` (${level})%`
+                    break;
+                case BatteryStatus.LOW:
+                    battery_status.className = "battery-status-low";
+                    battery_status.textContent = ` (${level})%`
+                    break;
+            }
+        }
+
+        const _host_battery_handler = new HostBatteryHandler(updateBatteryUI);
+
+        // ---------------------------------------------------------------------
+        const build_data_model = () => {
+            let _update_in_progress = false;
+            const _data = {};
+
+            return {
+                data: _data,
+                update_in_progress: () => {
+                    return _update_in_progress;
+                },
+                start_update: () => {
+                    _update_in_progress = true;
+                },
+                finish_update: (ids) => {
+                    _update_in_progress = false;
+                    for (id of ids) {
+                        _data[id].finish_update();
+                    }
+                },
+                update_from_server: (data) => {
+                    const now = Date.now();
+                    for (const [id, value] of Object.entries(data)) {
+                        if (_data[id] !== undefined) {
+                            if (_data[id].properties.value !== value) {
+                                if (!_data[id].needs_write_to_server() && !_data[id].update_in_progress()) {
+                                    _data[id].process_read_from_server(value);
+                                }
+                            }
+                        }
+                    }
+                },
+            };
+        }
+
+        const data_model = build_data_model();
+
+        const build_model_entry = (spec) => {
+            if (spec.slot === undefined || spec.type === undefined) {
+                throw Error(`Invalid model spec: ${JSON.stringify(spec)}`);
+            }
+
+            const _start = Date.now();
+            const _properties = {
+                slot: spec.slot,
+                type: spec.type,
+                value: null,
+            };
+            let _last_modification = _start;
+            let _last_read_from_server = _start;
+            let _last_write_to_server = _start;
+            let _update_in_progress = false;
+            const _callbacks = Array();
+            return {
+                properties: _properties,
+                set_value: (new_value) => {
+                    _properties.value = new_value;
+                    _last_modification = Date.now();
+                },
+                add_callback: (callback) => {
+                    _callbacks.push(callback);
+                },
+                process_read_from_server: (new_value) => {
+                    _properties.value = new_value;
+                    _last_read_from_server = Date.now();
+                    for (callback of _callbacks) {
+                        callback(_properties.value);
+                    }
+                },
+                needs_write_to_server: () => {
+                    return _last_modification > _last_write_to_server;
+                },
+                update_in_progress: () => {
+                    return _update_in_progress;
+                },
+                start_update: () => {
+                    _last_write_to_server = Date.now();
+                    _update_in_progress = true;
+                },
+                finish_update: () => {
+                    _update_in_progress = false;
+                },
+
+            }
+        };
+
+        const setup_control_stack = () => {
+            const container = document.getElementById("control-stack");
+            container.innerHTML = "";
+
+            const build_control_element = (spec, value) => {
+                const line = document.createElement("div");
+                line.classList.add("row");
+                container.appendChild(line);
+                const label = document.createElement("label");
+                const input = document.createElement("input");
+                line.append(label);
+                line.append(input);
+
+                const id = `control-stack-${spec.slot}`;
+                if (spec.title !== undefined) {
+                    label.innerText = spec.title;
+                } else {
+                    label.innerText = spec.slot;
+                }
+                label.setAttribute("for", id);
+                input.setAttribute("id", id);
+
+                const model = build_model_entry({
+                    slot: spec.slot,
+                    type: spec.type,
+                });
+                const writable = spec.writeable !== undefined && spec.writeable;
+                switch (spec.type) {
+                    case "bool":
+                        input.setAttribute("type", "checkbox");
+                        model.add_callback((new_value) => {
+                            input.checked = new_value;
+                        });
+                        if (writable) {
+                            input.addEventListener("input", (event) => { model.set_value(event.target.checked) });
+                        }
+                        break;
+                    case "np.float64":
+                        model.add_callback((new_value) => {
+                            if (new_value === undefined || new_value === null) {
+                                input.value = "";
+                            } else if (spec.digits) {
+                                input.value = round(new_value, spec.digits);
+                            } else {
+                                input.value = round(new_value, 4);
+                            }
+                        });
+                        if (writable) {
+                            input.addEventListener("input", (event) => {
+                                const parsed = Number(event.target.value);
+                                if (isNaN(parsed)) {
+                                    return;
+                                }
+                                model.set_value(parsed);
+                            });
+                        }
+                        break;
+                    default:
+                        model.add_callback((new_value) => {
+                            input.value = new_value;
+                        });
+                        if (writable) {
+                            input.addEventListener("input", (event) => { model.set_value(event.target.value) });
+                        }
+                }
+                if (!writable) {
+                    input.setAttribute("disabled", true);
+                }
+
+                model.process_read_from_server(value);
+                data_model.data[id] = model;
+            }
+
+            call("read", (data) => {
+                if (data.control_stack_elements === undefined || data.control_stack_elements === null) {
+                    console.warn("No control stack information received");
+                    return;
+                }
+
+                for (entry of data.control_stack_elements.specification) {
+                    if (entry.slot !== undefined) {
+                        build_control_element(entry, data.control_stack_elements.data[entry.slot]);
+                    }
+                }
+            }, { "query": ["control_stack_elements"] });
+
+        };
+
+        const controlled_q = Array(16);
+        controlled_q.fill(0.0);
+        let last_controlled_q = [...controlled_q];
+
+        const setup_q_control = () => {
+            const add_q_control_cell = (row, i, limits, offset) => {
+                const limit_lower = round_deg(rad_to_deg(limits[0]));
+                const limit_upper = round_deg(rad_to_deg(limits[1]));
+
+                const td = row.insertCell();
+
+                const range = document.createElement("input");
+                range.setAttribute("type", "range");
+                range.setAttribute("step", "0.01");
+                range.classList.add("control-range");
+                const number = document.createElement("input");
+                number.classList.add("control-number");
+                number.setAttribute("type", "text");
+                number.setAttribute("inputmode", "numeric");
+                number.setAttribute("pattern", ".*");
+
+                const configure_input = (element, other_element) => {
+                    element.setAttribute("min", limit_lower);
+                    element.setAttribute("max", limit_upper);
+                    element.setAttribute("step", "0.01");
+                    element.setAttribute("value", round_deg(rad_to_deg(controlled_q[offset])));
+                    element.addEventListener("input", (event) => {
+                        const input = Number(event.target.value);
+                        if (isNaN(input) || input < limit_lower || input > limit_upper) {
+                            return;
+                        }
+                        const value = round_deg(input);
+                        element.value = value;
+                        other_element.value = value;
+
+                        controlled_q[offset] = deg_to_rad(value);
+
+                        const changed = true;
+                        element.setAttribute("data-modified", changed);
+                        other_element.setAttribute("data-modified", changed);
+                    });
+                };
+
+
+                configure_input(number, range);
+                configure_input(range, number);
+
+                td.appendChild(number);
+                td.appendChild(range);
+
+                return { number, range }
+            }
+
+            const add_q_control_row = (tbody, name, i, limits) => {
+                const row = tbody.insertRow(i);
+                const td_name = row.insertCell(0);
+                td_name.innerText = name;
+
+                add_q_control_cell(row, 1, limits[i * 5 + 0], i * 3 + 0);
+                const arm = add_q_control_cell(row, 2, limits[i * 5 + 1], i * 3 + 1);
+                const td_lock = row.insertCell();
+                const forearm = add_q_control_cell(row, 3, limits[i * 5 + 4], i * 3 + 2);
+                add_q_control_cell(row, 4, limits[20 + i * 2], 12 + i);
+
+                td_lock.classList.add("q-control-lock");
+                const lock = document.createElement("input");
+                const label = document.createElement("label");
+                lock.setAttribute("type", "checkbox");
+                td_lock.appendChild(lock);
+                td_lock.appendChild(label);
+                const synchronizing_change_handler = (event) => {
+                    if (lock.checked) {
+                        const value = round_deg(arm.number.value);
+                        forearm.number.value = -value;
+                        forearm.number.dispatchEvent(new Event('input', {
+                            bubbles: false,
+                            cancelable: true,
+                        }));
+                    }
+                }
+                lock.addEventListener("change", (event) => {
+                    forearm.number.disabled = event.target.checked;
+                    forearm.range.disabled = event.target.checked;
+                    if (event.target.checked) {
+                        synchronizing_change_handler();
+                    }
+                });
+                arm.number.addEventListener("input", synchronizing_change_handler);
+                arm.range.addEventListener("input", synchronizing_change_handler);
+            };
+
+            call("read", (data) => {
+                if (data.joint_limits === undefined || data.joint_limits === null) {
+                    return;
+                }
+                if (data.controlled_q_ref === undefined || data.controlled_q_ref === null) {
+                    return;
+                }
+                const limits = data.joint_limits;
+                const controlled_q_ref = data.controlled_q_ref;
+                for (let i = 0; i < controlled_q_ref.length; ++i) {
+                    controlled_q[i] = controlled_q_ref[i];
+                }
+
+                const tbody = document.getElementById("q-control-data");
+                tbody.innerHTML = "";
+                add_q_control_row(tbody, "C1", 0, limits);
+                add_q_control_row(tbody, "C2", 1, limits);
+                add_q_control_row(tbody, "C3", 2, limits);
+                add_q_control_row(tbody, "C4", 3, limits);
+
+            }, { "query": ["joint_limits", "controlled_q_ref"] });
+        };
+
+        const controlled_ee_positions = Array(6);
+        for (let i = 0; i < controlled_ee_positions.length; ++i) {
+            const position = Array(3);
+            position.fill(0.0)
+            controlled_ee_positions[i] = position;
+        }
+        let last_controlled_ee_positions = JSON.parse(JSON.stringify(controlled_ee_positions));
+        let last_ee_control_status = null;
+        const update_ee_control_status = (new_status) => {
+            const tab_status = document.getElementById("tab-status");
+
+            if (new_status !== undefined) {
+                last_ee_control_status = new_status;
+            }
+            if (last_ee_control_status === null) {
+                tab_status.innerHTML = "";
+            } else {
+                const result = last_ee_control_status.result.replace("_", " ");
+                const loop = last_ee_control_status.closed_loop ? "closed" : "open";
+                tab_status.innerText = `${result} (${loop} loop)`;
+                if (!last_ee_control_status.usable) {
+                    tab_status.style = "color: red;";
+                } else {
+                    tab_status.style = "color: green;";
+                }
+            }
+        }
+
+        const setup_ee_control = () => {
+            const add_ee_control_cell = (row, i, j, limit) => {
+                const td = row.insertCell();
+
+                const range = document.createElement("input");
+                range.setAttribute("type", "range");
+                range.setAttribute("step", "0.01");
+                range.classList.add("control-range");
+                const number = document.createElement("input");
+                number.classList.add("control-number");
+                number.setAttribute("type", "text");
+                number.setAttribute("inputmode", "numeric");
+                number.setAttribute("pattern", ".*");
+
+                const configure_input = (element, other_element) => {
+                    element.setAttribute("step", "0.01");
+                    element.setAttribute("min", -limit);
+                    element.setAttribute("max", limit);
+                    element.setAttribute("value", round(controlled_ee_positions[i][j], 3));
+                    if (limit == 0.0) {
+                        element.setAttribute("disabled", true);
+                    } else {
+                        element.addEventListener("input", (event) => {
+                            const input = Number(event.target.value);
+                            if (isNaN(input) || input < -limit || input > limit) {
+                                return;
+                            }
+                            const value = round(input, 3);
+                            element.value = value;
+                            other_element.value = value;
+
+                            controlled_ee_positions[i][j] = value;
+
+                            const changed = true;
+                            element.setAttribute("data-modified", changed);
+                            other_element.setAttribute("data-modified", changed);
+                        });
+                    }
+                };
+
+
+                configure_input(number, range);
+                configure_input(range, number);
+
+                td.appendChild(number);
+                td.appendChild(range);
+
+                return { number, range }
+            }
+
+            const add_ee_control_row = (tbody, name, i, limit) => {
+                let limits = null
+                if (Array.isArray(limit)) {
+                    limits = limit;
+                } else {
+                    limits = [limit, limit, limit];
+                }
+
+                const row = tbody.insertRow(i);
+                const td_name = row.insertCell(0);
+                td_name.innerText = name;
+                add_ee_control_cell(row, i, 0, limits[0]);
+                add_ee_control_cell(row, i, 1, limits[1]);
+                add_ee_control_cell(row, i, 2, limits[2]);
+            };
+
+            call("read", (data) => {
+                if (data.controlled_ee_positions === undefined || data.controlled_ee_positions === null) {
+                    return;
+                }
+                const controlled_ee_positions_ref = data.controlled_ee_positions;
+
+                // we do not get a current tilt back, so we set it to 0
+                controlled_ee_positions[0] = [0, 0, 0];
+                for (let i = 0; i < controlled_ee_positions_ref.length; ++i) {
+                    controlled_ee_positions[i + 1] = [...controlled_ee_positions_ref[i]];
+                }
+
+
+                const tbody = document.getElementById("ee-control-data");
+                tbody.innerHTML = "";
+                add_ee_control_row(tbody, "Tilt", 0, [30.0, 30.0, 0.0]); // angular tilt in degrees
+                add_ee_control_row(tbody, "EE C1", 1, 1.0);
+                add_ee_control_row(tbody, "EE C2", 2, 1.0);
+                add_ee_control_row(tbody, "EE C3", 3, 1.0);
+                add_ee_control_row(tbody, "EE C4", 4, 1.0);
+                add_ee_control_row(tbody, "EE Connector", 5, 1.0);
+
+            }, { "query": ["controlled_ee_positions"] });
+
+            update_ee_control_status();
+        };
+
+        let joint_control_mode = null;
+        const open_tab = (tab_name, tab) => {
+            let i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            document.getElementById(tab_name).style.display = "block";
+            if (tab !== undefined) {
+                tablinks = document.getElementsByClassName("tablinks");
+                for (i = 0; i < tablinks.length; i++) {
+                    tablinks[i].className = tablinks[i].className.replace(" active", "");
+                }
+                tab.className += " active";
+            }
+
+            document.getElementById("tab-status").innerHTML = "";
+            document.getElementById("tab-status").style = "";
+            if (tab_name === "q-control") {
+                setup_q_control();
+                joint_control_mode = "q";
+            }
+            if (tab_name === "ee-control") {
+                setup_ee_control();
+                joint_control_mode = "ee";
+            }
+        }
+
+        [...document.getElementsByClassName("tablinks")].forEach(el => {
+            const tab_name = el.getAttribute("data-tab");
+            el.addEventListener("click", (event) => {
+                open_tab(tab_name, el)
+            });
+        })
+
+        const process_info = (info) => {
+            const container = document.getElementById("header-info");
+            container.innerHTML = "";
+            const info_text = document.createElement("span");
+            info_text.innerText = `${info.platform} (${info.environment})`;
+            container.appendChild(info_text);
+
+            if (info.environment === "hardware") {
+                for (let setting of ["wheels", "joints"]) {
+                    const value = info.safety[setting];
+                    const value_bool = (value === true) || (`${value}`.toLowerCase() == "true");
+                    const color = value_bool ? "yellow" : "red";
+
+                    const safety_text = document.createElement("span");
+                    safety_text.innerText = `${setting}: ${value_bool ? "enabled" : "disabled"}`;
+                    safety_text.style = `border: solid 1px; padding: 3px; background-color: ${color};`;
+                    container.appendChild(safety_text);
+                }
+            }
+        }
+
+        const process_safety = (data) => {
+            if (data.success !== null) {
+                for (let element of Array.from(document.querySelectorAll(".operating-state"))) {
+                    element.classList.remove("operating-state-active");
+                    element.classList.remove("operating-state-loading");
+                }
+                const new_active_state = document.querySelector(`a[data-id="${data.state}"]`);
+                if (new_active_state !== null) {
+                    new_active_state.classList.add("operating-state-active");
+                    document.getElementById("operating-state-success").textContent = data.success;
+                } else {
+                    document.getElementById("operating-state-success").textContent = "false";
+                    console.error("Cannot set state", data.state, "to active");
+                }
+            }
+        };
+
+        submit_goal.onclick = () => {
+            let goal_x = document.getElementById("goal_x").value;
+            let goal_y = document.getElementById("goal_y").value;
+            let goal_theta = document.getElementById("goal_theta").value;
+            let goal_type = document.getElementById("goal_type").checked;
+
+            if (goal_x === "" || goal_y === "" || goal_theta == "") {
+                window.alert("Incorrect goal format!");
+            } else {
+                call("write/goal", (data) => { }, {
+                    goal_x: Number(goal_x),
+                    goal_y: Number(goal_y),
+                    goal_theta: Number(goal_theta),
+                    goal_type: goal_type,
+                });
+            }
+        };
+
+        const process_move_base_status = (data) => {
+            document.getElementById("move-base-status").textContent = data;
+        };
+
+        const process_batteries = (data) => {
+            const tbody = document.getElementById("battery-states-data");
+            tbody.innerHTML = "";
+            for (let i = 0; i < data.length; ++i) {
+                const battery = data[i];
+                const row = tbody.insertRow(i);
+                const name = row.insertCell(0);
+                name.innerText = i;
+                const voltage = row.insertCell(1);
+                voltage.innerText = `${battery[0].toFixed(2)} V`;
+                const current = row.insertCell(2);
+                current.innerText = `${battery[1].toFixed(2)} A`;
+                const soc = row.insertCell(3);
+                soc.innerText = `${battery[2].toFixed(2)} Ah`;
+                const soc_estimated = row.insertCell(4);
+                soc_estimated.innerText = `${battery[3].toFixed(2)} Ah`;
+                if (battery[1] < 0.0) {
+                    row.classList.add("battery-supplying");
+                } else {
+                    row.classList.add("battery-charging");
+                }
+            }
+        };
+
+        const process_motor_torque = (data) => {
+            const tab = document.querySelector("[data-tab='motor-status']");
+            if (!tab.classList.contains("active")) {
+                return;
+            }
+
+            if (data.length != 20) {
+                console.warn(`Unsupported number of motor torques: ${data.length}`);
+                return;
+            }
+
+            table_data = []
+
+            // convert into 2D matrix of motor torques per compass
+            for (let i = 0; i < 4; ++i) {
+                table_data[i] = []
+                for (let j = 0; j < 5; ++j) {
+                    if (j < 3) {
+                        // first we have all 12 primary motors
+                        table_data[i][j] = data[i * 3 + j];
+                    } else {
+                        // then we have pairs of wheel orientation and rotation
+                        table_data[i][j] = data[(4 * 3) + (i * 2) + (j - 3)];
+                    }
+                }
+            }
+
+            // torque limits from
+            //  - https://drive.google.com/file/d/1q87wwYE2UXHq6JrTnXrbJx3FFjBoSNac
+            //  - https://drive.google.com/file/d/1kkT9hdkkAG3siideG14WhfFiwt8OJ0PT
+            const limits = [
+                [9.0, 36.0, 36.0, 3.0, 3.0],
+                [9.0, 36.0, 36.0, 3.0, 3.0],
+                [9.0, 54.0, 54.0, 3.0, 3.0],
+                [9.0, 36.0, 36.0, 3.0, 3.0],
+            ];
+
+            const color_from_load = (load) => {
+                if (load > 1.0) {
+                    return "rgba(128, 0, 0, 0.7)";
+                }
+                const load_limited = Math.max(load, 0.0);
+                const r = Math.round(255 * load);
+                const g = Math.round(255 * (1.0 - load));
+                const color = `rgba(${r}, ${g}, 0, 0.7)`;
+                return color;
+            }
+
+            const tbody = document.getElementById("motor-torque-data");
+            tbody.innerHTML = "";
+            for (let i = 0; i < table_data.length; ++i) {
+                const row_data = table_data[i];
+                const row = tbody.insertRow();
+                const name = row.insertCell();
+                name.innerText = `C${i + 1}`;
+                name.className = `compass-label-c${i + 1}`;
+
+                for (let j = 0; j < 5; ++j) {
+                    const torque_cell = row.insertCell();
+                    torque_cell.innerText = `${row_data[j].toFixed(2)}`;
+
+                    const limit = limits[i][j];
+                    const load = Math.abs(row_data[j] / limit);
+                    const color = color_from_load(load);
+                    torque_cell.style = `background-color: ${color};`;
+                }
+            }
+        };
+
+        let min_x = null;
+        let max_x = null;
+        let min_y = null;
+        let max_y = null;
+        const process_wheels = (data) => {
+            const ctx = document.getElementById("top-view").getContext("2d");
+
+            function y_screen(y) {
+                return ctx.canvas.height - y;
+            }
+
+            const rotation_matrix_to_angle = (m) => {
+                // http://eecs.qmul.ac.uk/~gslabaugh/publications/euler.pdf
+                const theta = -Math.asin(m[2][0]);
+                return Math.atan2(m[1][0] / Math.cos(theta), m[0][0] / Math.cos(theta));
+            };
+
+            if (data.wheel_positions.length != 4 || data.wheel_rotations.length != 4) {
+                return;
+            }
+
+            const scale = 0.7;
+            const margin = 0.1;
+
+            const indicator_px = 50;
+            const wheel_radius_px = 10;
+
+            const fixed_size = 0.5;
+            const compass_colors = ["#0000FF", "#FFFFFF", "#FF0000", "#FFFF00"];
+
+            ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+            ctx.beginPath();
+
+            let min_x_now = Infinity;
+            let max_x_now = -Infinity;
+            let min_y_now = Infinity;
+            let max_y_now = -Infinity;
+            for (let i = 0; i < 4; ++i) {
+                x = data.wheel_positions[i][0];
+                y = data.wheel_positions[i][1];
+                min_x_now = Math.min(x, min_x_now);
+                max_x_now = Math.max(x, max_x_now);
+                min_y_now = Math.min(y, min_y_now);
+                max_y_now = Math.max(y, max_y_now);
+            }
+
+            const alpha = 0.1;
+            min_x = (min_x === null) ? min_x_now : alpha * min_x_now + (1 - alpha) * min_x;
+            min_y = (min_y === null) ? min_y_now : alpha * min_y_now + (1 - alpha) * min_y;
+            max_x = (max_x === null) ? max_x_now : alpha * max_x_now + (1 - alpha) * max_x;
+            max_y = (max_y === null) ? max_y_now : alpha * max_y_now + (1 - alpha) * max_y;
+
+            const size_x = max_x - min_x;
+            const size_y = max_y - min_y;
+            const size = Math.max(fixed_size, Math.max(size_x, size_y));
+
+            const draw_wheel = (wheel_x, wheel_y, rotation, line_color, fill_color, label) => {
+                x = ((wheel_x - min_x) / size) * scale * ctx.canvas.height + margin * ctx.canvas.height;
+                y = ((wheel_y - min_y) / size) * scale * ctx.canvas.width + margin * ctx.canvas.width;
+
+                // direction
+                ctx.beginPath();
+                ctx.strokeStyle = line_color;
+                const angle = rotation_matrix_to_angle(rotation);
+                ctx.moveTo(x, y_screen(y));
+                ctx.lineTo(
+                    x + Math.cos(angle) * indicator_px,
+                    y_screen(y + Math.sin(angle) * indicator_px)
+                );
+                ctx.stroke();
+
+                // wheel circle
+                ctx.beginPath();
+                ctx.moveTo(x + wheel_radius_px, y_screen(y));
+                ctx.arc(x, y_screen(y), wheel_radius_px, 0, 2 * Math.PI);
+                ctx.lineWidth = 2;
+                ctx.fillStyle = fill_color;
+                ctx.fill();
+                ctx.stroke();
+                ctx.lineWidth = 1;
+
+                // label
+                if (label) {
+                    ctx.beginPath();
+                    ctx.font = "20px sans-serif";
+                    ctx.fillStyle = line_color;
+                    ctx.fillText(label, x + 15, y_screen(y) + 5);
+                }
+            };
+
+            for (let i = 0; i < 4; ++i) {
+                let in_contact = false;
+                if (data.contacts !== undefined && data.contacts !== null) {
+                    in_contact = data.contacts[i] == "CONTACT";
+                }
+
+                draw_wheel(
+                    data.wheel_positions[i][0],
+                    data.wheel_positions[i][1],
+                    data.wheel_rotations[i],
+                    in_contact ? "#000000" : "#F988FF",
+                    compass_colors[i],
+                    in_contact ? `C${i + 1}` : `X${i + 1}`
+                );
+
+                if (data.wheel_positions_ref !== undefined && data.wheel_rotations_ref !== undefined) {
+                    draw_wheel(
+                        data.wheel_positions_ref[i][0],
+                        data.wheel_positions_ref[i][1],
+                        data.wheel_rotations_ref[i],
+                        in_contact ? "#00000050" : "#F988FF50",
+                        compass_colors[i] + "50"
+                    );
+                }
+            }
+        };
+
+        const process_velocity_command = (data) => {
+            const ctx = document.getElementById("command-display").getContext("2d");
+
+            ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+            ctx.beginPath();
+
+            // Contents of the velocity command:
+            // - vx
+            // - vy
+            // - w
+            // - 4x mode (see nimbleone/unified_control/types.class.hxx)
+            if (data.length != 7) {
+                return;
+            }
+            const modes = data.slice(-4).map(m => ["None", "Ackermann", "Crab", "Q Controlled (free)", "Q Controlled (locked)", "Q Controlled (explicit)", "Locked", "Free"][m]);
+            let all_modes_same = true;
+            for (let mode of modes) {
+                if (modes[0] != mode) {
+                    all_modes_same = false;
+                }
+            }
+
+            document.getElementById("command-mode").title = `Modes: ${modes}`;
+            if (all_modes_same) {
+                document.getElementById("command-mode").innerText = `(${modes[0]})`;
+            } else {
+                document.getElementById("command-mode").innerText = "(mixed)";
+            }
+
+            const cx = ctx.canvas.height / 2;
+            const cy = ctx.canvas.width / 2;
+            const max_length = Math.min(ctx.canvas.width / 2, ctx.canvas.height / 2);
+            const max_val = 0.3;
+
+            ctx.beginPath();
+            ctx.arc(cx, cy, 10, 0, 2 * Math.PI);
+            ctx.stroke();
+
+            ctx.beginPath();
+            let gradient_x = ctx.createLinearGradient(0, 0, max_length * 2, 0);
+            gradient_x.addColorStop(0.0, "red");
+            gradient_x.addColorStop(0.5, "green");
+            gradient_x.addColorStop(1.0, "red");
+            ctx.fillStyle = gradient_x;
+            ctx.fillRect(cx, cy - 5, (-data[1] / max_val) * max_length, 10);
+
+            ctx.beginPath();
+            ctx.fillStyle = "black";
+            ctx.font = "16px FreeMono";
+            ctx.fillText(`vy: ${data[1].toFixed(2).padStart(5, " ")}`, cx + max_length - 90, cy + 20);
+
+            ctx.beginPath();
+            let gradient_y = ctx.createLinearGradient(0, 0, 0, max_length * 2);
+            gradient_y.addColorStop(0.0, "red");
+            gradient_y.addColorStop(0.5, "green");
+            gradient_y.addColorStop(1.0, "red");
+            ctx.fillStyle = gradient_y;
+            ctx.fillRect(cx - 5, cy, 10, (-data[0] / max_val) * max_length);
+
+            ctx.beginPath();
+            ctx.fillStyle = "black";
+            ctx.font = "16px FreeMono";
+            ctx.fillText(
+                `vx: ${data[0].toFixed(2).padStart(5, " ")}`,
+                cy - 100,
+                cy - max_length + 20
+            );
+
+            ctx.beginPath();
+            gradient_x = ctx.createLinearGradient(0, 0, max_length * 2, 0);
+            gradient_x.addColorStop(0.0, "red");
+            gradient_x.addColorStop(0.5, "green");
+            gradient_x.addColorStop(1.0, "red");
+            ctx.strokeStyle = gradient_x;
+            angle = ((-data[2] / max_val) * Math.PI) / 2;
+            ctx.lineWidth = 10;
+            ctx.arc(
+                cx,
+                cy,
+                max_length / 2,
+                Math.min(angle, 0) - Math.PI / 2,
+                Math.max(angle, 0) - Math.PI / 2
+            );
+            ctx.stroke();
+            ctx.lineWidth = 1;
+
+            ctx.beginPath();
+            ctx.fillStyle = "black";
+            ctx.font = "16px FreeMono";
+            ctx.fillText(`ω: ${data[2].toFixed(2).padStart(5, " ")}`, cx + max_length - 110, cy - 80);
+
+            ctx.beginPath();
+            ctx.fillStyle = "black";
+            ctx.arc(cx, cy, 5, 0, 2 * Math.PI);
+            ctx.fill();
+        };
+
+        const process_rs_camera = (camera_json) => {
+            _stream_handler.updateImage(camera_json);
+        }
+
+        const process_gamepad_feedback = (gamepad) => {
+            // do nothing
+        }
+
+        const process_log = (data) => {
+            const log = document.getElementById("log");
+
+            const was_at_bottom =
+                log.innerText == "" || log.scrollTop + log.clientHeight == log.scrollHeight;
+            for (const line of data) {
+                log.innerText += line + "\n";
+            }
+
+            if (was_at_bottom) {
+                log.scrollTop = log.scrollHeight;
+            }
+        };
+
+
+
+
+
+
+        let last_update = Date.now();
+        let poll_period_ms = 1000 / REQUESTS_PER_SECOND;
+        const MAX_POLL_PERIOD_MS = 50;
+        const MIN_POLL_PERIOD_MS = poll_period_ms;
+        const connected_status = document.getElementById("connected-status");
+        const poll_server = (args) => {
+            query = args;
+            try {
+                let request_time = Date.now();
+                call(
+                    "read",
+                    (data) => {
+                        if (data === null || data.running !== true) {
+                            connected_status.className = "connected-status-disconnected";
+                        } else {
+                            connected_status.className = "connected-status-connected";
+
+                            // automatically set polling period for a good user experience
+                            const round_trip_time = Date.now() - request_time;
+                            const current_poll_period_ms = round_trip_time * 2;
+                            const alpha = 0.1;  // for exponential decay filter
+                            poll_period_ms = current_poll_period_ms * alpha + poll_period_ms * (1.0 - alpha);
+                            poll_period_ms = round(poll_period_ms, 1);
+                            poll_period_ms = Math.min(MAX_POLL_PERIOD_MS, poll_period_ms);
+                            poll_period_ms = Math.max(MIN_POLL_PERIOD_MS, poll_period_ms);
+
+                            connected_status.setAttribute("title",
+                                `Polling time: ${poll_period_ms} ms\n` + `Round trip time: ${round_trip_time} ms\n`);
+                        }
+
+                        // ignore outdated data
+                        if (request_time < last_update) {
+                            return;
+                        }
+                        last_update = request_time;
+
+                        // ignore empty response and errors
+                        if (data === null) {
+                            return;
+                        }
+
+                        if (data.info !== undefined && data.info !== null) {
+                            process_info(data.info);
+                        }
+
+                        if (data.model !== undefined && data.model !== null) {
+                            data_model.update_from_server(data.model);
+                        }
+                        if (data.safety !== undefined && data.safety !== null) {
+                            process_safety(data.safety);
+                        }
+                        if (data.wheels !== undefined && data.wheels !== null) {
+                            process_wheels(data.wheels);
+                        }
+                        if (data.velocity_command !== undefined && data.velocity_command !== null) {
+                            process_velocity_command(data.velocity_command);
+                        }
+                        if (data.log !== undefined && data.log !== null) {
+                            process_log(data.log);
+                        }
+                        if (data.move_base_status !== undefined && data.move_base_status !== null) {
+                            process_move_base_status(data.move_base_status);
+                        }
+                        if (data.batteries !== undefined && data.batteries !== null) {
+                            process_batteries(data.batteries);
+                        }
+                        if (data.motor_torque !== undefined && data.motor_torque !== null) {
+                            process_motor_torque(data.motor_torque);
+                        }
+                        if (data.rs_camera !== undefined && data.rs_camera !== null) {
+                            process_rs_camera(data.rs_camera);
+                        }
+                        if (data.gamepad !== undefined && data.gamepad !== null) {
+                            process_gamepad_feedback(data.gamepad);
+                        }
+                    },
+                    { query }
+                );
+            } catch (e) {
+                connected_status.className = "connected-status-disconnected";
+                console.error("Error:", e, "with query:", query);
+            }
+        };
+
+        let poll_count = 0;
+        const poll = () => {
+            ++poll_count;
+            if (connected_status.className == "connected-status-disconnected") {
+                try {
+                    poll_server({});
+                } catch (e) {
+                    console.error("Status poll error:", e);
+                }
+                setTimeout(poll, 1000);
+            } else {
+                try {
+                    poll_server({
+                        model: true,
+                        safety: true,
+                        wheels: true,
+                        velocity_command: true,
+                        move_base_status: true,
+                        batteries: true,
+                        motor_torque: true,
+                        rs_camera: _camera_json,
+                        gamepad: _gamepad_json,
+                        log: poll_count % 10 == 0,
+                    });
+                } catch (e) {
+                    console.error("Data poll error:", e);
+                }
+
+                // TODO(Maximilian, 2022-11-10): Include in data model
+                // only send new controlled q when we have something new and no transmission is ongoing
+                let sending_controlled_q = false;
+                if (!sending_controlled_q && !(controlled_q.every((v, i) => v === last_controlled_q[i]))) {
+                    sending_controlled_q = true;
+                    let used_controlled_q = [...controlled_q];
+                    call("write/controlled_q", (data) => {
+                        sending_controlled_q = false;
+                        last_controlled_q = used_controlled_q;
+                    },
+                        { controlled_q: controlled_q });
+                }
+
+                // TODO(Maximilian, 2022-11-10): Include in data model
+                // only send new controlled ee when we have something new and no transmission is ongoing
+                let sending_controlled_ee_positions = false;
+                if (!sending_controlled_ee_positions && JSON.stringify(controlled_ee_positions) != JSON.stringify(last_controlled_ee_positions)) {
+                    sending_controlled_ee_positions = true;
+                    let used_ee_positions = JSON.parse(JSON.stringify(controlled_ee_positions));
+                    call("write/controlled_ee_positions", (data) => {
+                        sending_controlled_ee_positions = false;
+                        last_controlled_ee_positions = JSON.parse(JSON.stringify(used_ee_positions));
+                        update_ee_control_status(data);
+                    },
+                        { controlled_ee_positions: controlled_ee_positions });
+                }
+
+                // update modified elements of data model to server
+                if (!data_model.update_in_progress()) {
+                    const data_to_transmit = {};
+                    for (const [id, model_entry] of Object.entries(data_model.data)) {
+                        if (model_entry.needs_write_to_server()) {
+                            model_entry.start_update();
+                            data_to_transmit[id] = {
+                                slot: model_entry.properties.slot,
+                                type: model_entry.properties.type,
+                                value: model_entry.properties.value,
+                            };
+                        }
+                    }
+                    if (Object.keys(data_to_transmit).length > 0) {
+                        data_model.start_update();
+                        let ids = Object.keys(data_to_transmit);
+                        call(
+                            "write/model",
+                            (data) => { data_model.finish_update(ids); },
+                            data_to_transmit
+                        );
+                    }
+                }
+
+                setTimeout(poll, poll_period_ms);
+            }
+        };
+
+        document.getElementById("log-clear").addEventListener("click", (e) => {
+            log.innerText = "";
+        });
+
+        for (let element of Array.from(document.querySelectorAll(".operating-state"))) {
+            element.addEventListener("click", (e) => {
+                const old_id = document
+                    .querySelector(".operating-state-active")
+                    ?.getAttribute("data-id");
+                const new_id = e.target.getAttribute("data-id");
+                if (old_id !== undefined) {
+                    e.target.classList.add("operating-state-loading");
+                    call("write/hal.safety", (data) => { }, {
+                        old_operating_state_id: old_id,
+                        new_operating_state_id: new_id,
+                    });
+                }
+            });
+        }
+
+        open_tab('motor-status');
+        document.getElementById("q-control-reload").addEventListener("click", (e) => { setup_q_control() });
+        document.getElementById("ee-control-reload").addEventListener("click", (e) => { setup_ee_control() });
+
+        setup_control_stack();
+
+        poll();
+    </script>
+</body>
+
+</html>

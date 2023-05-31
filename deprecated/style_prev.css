@@ -1,0 +1,397 @@
+/******************************************************************************************/
+/* GLOBAL LAYOUT                                                                          */
+/******************************************************************************************/
+html {
+    font-family: "Roboto", sans-serif;
+    overflow-y: scroll;
+}
+
+.header {
+    grid-area: header;
+    margin-bottom: 0.5em;
+}
+
+.header-left {
+    float: left;
+}
+
+.header-right {
+    position: relative;
+    float: right;
+}
+
+.header-right span {
+    margin: 0 0.5em;
+}
+
+.left {
+    grid-area: left;
+}
+
+.middle {
+    grid-area: middle;
+}
+
+.right {
+    grid-area: right;
+}
+
+.footer {
+    grid-area: footer;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-areas:
+        "header header      header       header"
+        "left   middle-left middle-right right"
+        "footer footer      footer       footer";
+    gap: 0 0.5em;
+    padding: 5px;
+}
+
+.grid-container>div {
+    background-color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    padding: 0 0;
+    font-size: 20px;
+}
+
+.content-box {
+    border: 1px solid #ccc;
+    margin-bottom: 0.5em;
+}
+
+.content-box .content-box-header {
+    border-bottom: 1px solid #ccc;
+    background-color: #f1f1f1;
+    line-height: 2.0em;
+}
+
+/******************************************************************************************/
+/* OPERATING STATE AND BATTERY STATE                                                      */
+/******************************************************************************************/
+.bg-danger {
+    background: repeating-linear-gradient(45deg,
+            #e9e178,
+            #e9e178 10px,
+            #c0c0c0 10px,
+            #c0c0c0 20px);
+}
+
+#operating-states ul {
+    padding: 0;
+    margin-block-start: 0.5em;
+    margin-block-end: 0.5em;
+    overflow: hidden;
+}
+
+#operating-states ul.align-vertical>li {
+    display: block;
+    float: left;
+    clear: both;
+    width: 100%;
+}
+
+th {
+    font-weight: normal;
+}
+
+th,
+td {
+    text-align: right;
+}
+
+.battery-charging {
+    color: green;
+}
+
+.battery-supplying {
+    color: red;
+}
+
+a.operating-state {
+    width: 100%;
+    user-select: none;
+    max-width: 300px;
+    display: inline-block;
+    padding: 0.1em 0.1em;
+    border: 0.1em solid #666666;
+    margin: 0 0.2em 0.2em 0;
+    border-radius: 0.12em;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-weight: 300;
+    text-shadow: 0 0.04em 0.04em rgba(0, 0, 0, 0.35);
+    text-align: center;
+    transition: all 0.15s;
+}
+
+a.operating-state:hover {
+    text-shadow: 0 0 2em #000000;
+    border-color: #000000;
+}
+
+a.operating-state:active,
+a.operating-state-loading {
+    text-shadow: 0 0 2em #000000;
+    border-color: #000000;
+    background: #a0d030;
+}
+
+a.operating-state-active {
+    text-shadow: 0 0 2em #000000;
+    border-color: #000000;
+    background: #30d060;
+}
+
+#connected-status {
+    margin-left: 50px;
+}
+
+.connected-status-disconnected::before {
+    content: "⚠ disconnected";
+    color: red;
+}
+
+.connected-status-connected::before {
+    content: "⚑ connected";
+    color: green;
+}
+
+#joystick-status {
+    margin-left: 30px;
+}
+
+.joystick-status-disconnected::before {
+    content: "🎮 disconnected";
+    color: gray;
+}
+
+.joystick-status-connected::before {
+    content: "🎮 connected";
+    color: green;
+}
+
+.joystick-status-idle::before {
+    content: "🎮 idle";
+    color: #30d060;
+}
+
+.joystick-status-unsupported::before {
+    content: "🎮 unsupported";
+    color: red;
+}
+
+.joystick-status-too-many::before {
+    content: "🎮 too many connected";
+    color: red;
+}
+
+#streaming-status {
+    margin-left: 30px;
+}
+
+.streaming-status-on::before {
+    content: "📹 streaming on";
+    color: green;
+}
+
+.streaming-status-off::before {
+    content: "📹 streaming off";
+    color: gray;
+}
+
+.streaming-status-unsupported::before {
+    content: "📹 unsupported";
+    color: red;
+}
+
+#battery-status {
+    margin-left: 30px;
+}
+
+.battery-status-ok::before {
+    content: "🔋 battery ok";
+    color: green;
+}
+
+.battery-status-charging::before {
+    content: "🔌 charging";
+    color: green;
+}
+
+.battery-status-low::before {
+    content: "🪫 battery low";
+    color: red;
+}
+
+.battery-status-unknown::before {
+    content: "❔ battery unknown";
+    color: gray;
+}
+
+
+/******************************************************************************************/
+/* CONTROL STACK                                                                          */
+/******************************************************************************************/
+#control-stack {
+    text-align: left;
+    padding-left: 1em;
+}
+
+
+#control-stack label {
+    display: table-cell;
+    padding-right: 1em;
+}
+
+#control-stack input {
+    display: table-cell;
+}
+
+#control-stack .row {
+    display: table-row;
+}
+
+/******************************************************************************************/
+/* VELOCITY COMMAND + TOP VIEW                                                            */
+/******************************************************************************************/
+canvas {
+    margin: 0.5em;
+    border: solid black 1px;
+}
+
+/******************************************************************************************/
+/* LOG                                                                                    */
+/******************************************************************************************/
+div#log {
+    text-align: left;
+    font-family: "Courier New", Courier, monospace;
+    background-color: #eeeeee;
+    border-radius: 5px;
+    border: solid black 1px;
+    min-height: 200px;
+    max-height: 300px;
+    overflow-y: scroll;
+    font-size: 15px;
+}
+
+div.log-menu {
+    width: 100%;
+    text-align: left;
+    font-size: 15px;
+    color: #666666;
+}
+
+div.log-menu>a {
+    text-decoration: underline;
+}
+
+div.log-menu>a:hover {
+    text-decoration: underline;
+    color: #000000;
+    cursor: pointer;
+}
+
+/******************************************************************************************/
+/* TABS                                                                                   */
+/******************************************************************************************/
+.tab {
+    overflow: hidden;
+}
+
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 0px 16px;
+    line-height: inherit;
+    font-size: inherit;
+    transition: 0.3s;
+}
+
+.tab #tab-status {
+    float: right;
+    padding: 0px 16px;
+    line-height: inherit;
+    font-size: inherit;
+    margin: 0px;
+}
+
+.tab button:hover {
+    background-color: #ddd;
+}
+
+.tab button.active {
+    background-color: #ccc;
+}
+
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    font-size: 14px;
+}
+
+#tab-box {
+    min-height: 225px;
+}
+
+/******************************************************************************************/
+/* Q CONTROL AND EE-CONTROL                                                               */
+/******************************************************************************************/
+.q-control {
+    text-align: left;
+}
+
+.control-range {
+    width: 250px;
+}
+
+.control-number {
+    width: 75px;
+}
+
+.q-control-lock input[type='checkbox']+label:before {
+    content: "🔓";
+    color: transparent;
+    text-shadow: 0 0 0 blue;
+}
+
+.q-control-lock input[type='checkbox']:checked+label:before {
+    content: "🔒";
+    color: transparent;
+    text-shadow: 0 0 0 red;
+}
+
+input[data-modified='true'] {
+    color: #AA0000;
+    accent-color: #AA0000;
+}
+
+label {
+    cursor: pointer;
+}
+
+#motor-torque {
+    text-align: left;
+    font-size: 20px;
+}
+
+.compass-label-c1 {
+    background-color: #0000FF60;
+}
+
+.compass-label-c2 {
+    background-color: #FFFFFF60;
+}
+
+.compass-label-c3 {
+    background-color: #FF000060;
+}
+
+.compass-label-c4 {
+    background-color: #FFFF0060;
+}

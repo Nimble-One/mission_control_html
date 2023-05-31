@@ -1,0 +1,377 @@
+@font-face {
+  font-family: 'Ubuntu';
+  src: url('../fonts/UbuntuMono-Regular.ttf');
+}
+
+html,
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  font-family: 'Ubuntu';
+  background: linear-gradient(
+    135deg,
+    #000 8.75%,
+    #111 8.75%,
+    #111 41.25%,
+    #000 41.25%,
+    #000 58.75%,
+    #111 58.75%,
+    #111 91.25%,
+    #000 91.25%
+  );
+  background-size: 10px 10px;
+  background-position: 50px 50px;
+}
+
+/* HEADER */
+#cnt-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-bottom: 1px solid #424242;
+  padding: 10px;
+  background: black;
+}
+
+#cnt-header #cnt-header-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  font-size: 50px;
+  font-weight: 600;
+  line-height: 54px;
+}
+
+#cnt-header #cnt-header-logo .header-logo {
+  height: 45px;
+  width: 120px;
+  margin: 0 30px;
+}
+
+#cnt-header #cnt-header-infos {
+  display: flex;
+  flex: 8;
+}
+
+#cnt-header #cnt-header-infos .status-item {
+  display: flex;
+  flex-direction: column;
+  margin: 0 35px;
+}
+
+#cnt-header #cnt-header-infos .status-item .status-title {
+  font-size: 12px;
+}
+
+#cnt-header #cnt-header-infos .status-item .status-subtitle {
+  font-size: 14px;
+}
+
+#cnt-header #cnt-header-infos .status-item .status-info {
+  margin: 2px 0;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 18px;
+}
+
+#cnt-header #cnt-header-navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex: 2;
+}
+
+#cnt-header #cnt-header-navbar .nav-item {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin: 0 15px;
+}
+
+#cnt-header #cnt-header-navbar .battery-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0 15px;
+}
+
+/* CONTENT */
+#cnt-main {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  padding: 5px;
+  height: calc(100% - 137px);
+}
+
+#cnt-main .title {
+  color: var(--bs-danger);
+}
+
+#cnt-main .left-bar {
+  flex-direction: column;
+  overflow-x: scroll;
+}
+
+#cnt-main .left-bar .empty {
+  writing-mode: tb-rl;
+  transform: rotate(-180deg);
+  color: var(--bs-danger);
+  width: 100%;
+  font-size: 104px;
+  height: calc(100% - 25px);
+}
+
+#cnt-main .left-bar .title {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+#cnt-main .left-bar .emergency-button {
+  width: calc(100% - 15px);
+  height: 120px;
+  display: block;
+  margin: 2px;
+  font-weight: 600;
+  border: 1px solid #424242;
+  border-radius: 0;
+}
+
+#cnt-main .left-bar .emergency-button span {
+  position: relative;
+  left: 15px;
+}
+
+#cnt-main .left-bar .emergency-button svg {
+  position: relative;
+  top: -45px;
+  padding: 3px;
+  background-color: #424242;
+}
+
+#cnt-main .view {
+  flex: 10;
+}
+
+#cnt-main .view .camera-view img {
+  width: 100%;
+}
+
+#cnt-main .right-bar {
+  flex: 3;
+  overflow-y: scroll;
+}
+
+#cnt-main .right-bar .content-section {
+  display: flex;
+  flex-direction: column;
+}
+
+#cnt-main .right-bar .content-section button {
+  width: calc(100% - 10px);
+  margin: 5px 5px;
+  font-weight: 300;
+}
+
+#cnt-main .right-bar .content-section .even-line {
+  background-color: #121212;
+}
+
+#cnt-main .right-bar .content-section .line-data {
+  display: flex;
+  flex-direction: row;
+  font-size: 16px;
+  padding: 2px 5px;
+}
+
+#cnt-main .right-bar .content-section .line-label {
+  flex: 1;
+  text-align: left;
+  font-weight: 300;
+}
+
+#cnt-main .right-bar .content-section .line-value {
+  text-align: right;
+  font-weight: 700;
+}
+
+/* FOOTER */
+#cnt-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #212121;
+  padding: 10px 15px;
+  border-top: 1px solid #424242;
+}
+
+#cnt-footer .command-title {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+#cnt-footer .command-input {
+  display: flex;
+  flex-direction: column;
+  margin: 0 20px;
+}
+
+#cnt-footer .command-input .shape-button {
+  display: flex;
+  flex-direction: row;
+}
+
+/* REMOTE CONTROL BUTTON */
+#cnt-footer .command-input .shape-button .dpad {
+  width: 8px;
+  height: 24px;
+  margin: 0px 15px;
+  background-color: #424242;
+  border-radius: 2px;
+}
+
+#cnt-footer .command-input .shape-button .dpad::after {
+  content: '';
+  display: block;
+  margin-left: -8px;
+  margin-top: 8px;
+  width: 24px;
+  height: 8px;
+  background-color: #424242;
+  border-radius: 2px;
+}
+
+#cnt-footer .command-input .shape-button .stick {
+  width: 15px;
+  height: 15px;
+  border: 4px solid black;
+  border-radius: 8px;
+  margin: 4px;
+  background-color: #424242;
+}
+
+#cnt-footer .command-input .shape-button .controls {
+  width: 15px;
+  height: 15px;
+  border-radius: 8px;
+  margin: 4px;
+  background-color: #424242;
+}
+
+#cnt-footer .command-input .shape-button .start-select {
+  width: 25px;
+  height: 10px;
+  border-radius: 5px;
+  margin: 6px;
+  background-color: #424242;
+}
+
+#cnt-footer .command-input .shape-button .trigger {
+  width: 10px;
+  height: 20px;
+  border-radius: 3px;
+  margin: 0 5px;
+  background-color: #424242;
+}
+
+#cnt-footer .command-input .shape-button .subtrigger {
+  width: 18px;
+  height: 10px;
+  border-radius: 3px;
+  margin: 6px 5px;
+  background-color: #424242;
+}
+
+#cnt-footer .command-input .shape-button .button {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 900;
+}
+
+#cnt-footer .command-input .command-info {
+  font-size: 14px;
+  text-align: center;
+}
+
+/* CUSTOM GLOBAL STYLES */
+.section {
+  margin: 2px;
+  border: 1px solid #424242;
+}
+
+.header-section {
+  font-size: 21px;
+  background-color: #212121;
+  font-weight: 600;
+  border-bottom: 1px solid #424242;
+  padding: 1px 5px;
+}
+
+.content-section {
+  font-size: 14px;
+  background-color: #212121;
+}
+
+.success-value::after {
+  content: '';
+  margin: 0 5px;
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  border-radius: 8px;
+  background-color: var(--bs-success);
+}
+
+.danger-value::after {
+  content: '';
+  margin: 0 5px;
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  border-radius: 8px;
+  background-color: var(--bs-danger);
+}
+
+/* CUSTOM COLOR ICONS */
+svg {
+  fill: white;
+}
+
+svg.disabled-fill {
+  fill: var(--bs-tertiary-color);
+}
+
+svg.success-fill {
+  fill: var(--bs-success);
+}
+
+svg.danger-fill {
+  fill: var(--bs-danger);
+}
+
+svg.warning-fill {
+  fill: var(--bs-warning);
+}
+
+svg.info-fill {
+  fill: var(--bs-info);
+}
+
+svg.C1-fill {
+    fill: var(--bs-blue);
+}
+
+svg.C2-fill {
+    fill: var(--bs-white);
+}
+
+svg.C3-fill {
+    fill: var(--bs-red);
+}
+
+svg.C4-fill {
+    fill: var(--bs-yellow);
+}

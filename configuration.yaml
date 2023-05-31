@@ -1,0 +1,36 @@
+mission_control:
+    camera:
+        accel_smoothing_coeff: 0.95
+
+    control_stack_elements:
+        - slot: supervisor.fsm.current_state
+          title: Supervisor State
+          type: str
+        - slot: loop.locked
+          title: Loop Locked
+          type: bool
+          writeable: yes
+        - slot: robot.control.stage
+          title: Stage
+          type: np.uint32
+        - slot: robot.control.trajectory_current_completion
+          title: Trajectory Current Completion
+          type: np.float64
+          digits: 3
+        - slot: robot.control.trajectory_desired_completion
+          title: Trajectory Desired Completion
+          type: np.float64
+          writeable: yes
+        - slot: robot.control.trajectory_speed_factor
+          title: Trajectory Speed Factor
+          type: np.float64
+          writeable: yes
+        - slot: debug.configurable.key
+          title: Configurable State (Current)
+          type: str
+        - slot: debug.configurable.next_key
+          title: Configurable State (Next)
+          type: str
+        - slot: teleop.joystick.source
+          title: Teleop Source
+          type: str
