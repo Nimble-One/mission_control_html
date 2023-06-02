@@ -335,6 +335,17 @@ body {
   background-color: var(--bs-danger);
 }
 
+/* NO HOVER BUTTON */
+.btn-success:hover {
+  color: white;
+  background-color: #198754;
+}
+
+.btn-outline-light:not(.btn-success):hover {
+  color: white;
+  background-color: inherit;
+}
+
 /* CUSTOM COLOR ICONS */
 svg {
   fill: white;
